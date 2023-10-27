@@ -1,0 +1,176 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.microservices</groupId>
+  <artifactId>microservices-template</artifactId>
+  <version>${revision}</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <!-- 版本管理   -->
+    <revision>1.0.0.0</revision>
+    <!--   通用设置     -->
+    <java.version>17</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <!-- 版本管理   -->
+    <spring.boot.version>3.0.2</spring.boot.version>
+    <com.github.xiaoymin.version>4.2.0</com.github.xiaoymin.version>
+    <com.baomidou.version>3.5.3.1</com.baomidou.version>
+    <pagehelper-spring-boot-starter.version>1.4.6</pagehelper-spring-boot-starter.version>
+    <cn.hutool.version>5.8.20</cn.hutool.version>
+    <snakeyaml.version>2.2</snakeyaml.version>
+    <com.baomidou.version>3.5.3.1</com.baomidou.version>
+    <spring-cloud-alibaba-dependencies.version>2022.0.0.0</spring-cloud-alibaba-dependencies.version>
+    <spring-cloud-dependencies.version>2022.0.0</spring-cloud-dependencies.version>
+    <fastjson2.version>2.0.23</fastjson2.version>
+    <!-- 插件版本   -->
+    <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!--   spring boot 依赖  spring boot管理    -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring.boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!--   spring cloud alibbba  版本管理以及微服务组件  -->
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>${spring-cloud-alibaba-dependencies.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!--   spring cloud  版本管理以及微服务组件   -->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud-dependencies.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!--   mybatis-plus     -->
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>${com.baomidou.version}</version>
+      </dependency>
+      <!--   分页      -->
+      <dependency>
+        <groupId>com.github.pagehelper</groupId>
+        <artifactId>pagehelper-spring-boot-starter</artifactId>
+        <version>${pagehelper-spring-boot-starter.version}</version>
+      </dependency>
+      <!--	knife4j文档	-->
+      <dependency>
+        <groupId>com.github.xiaoymin</groupId>
+        <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+        <version>${com.github.xiaoymin.version}</version>
+      </dependency>
+      <!--   fastjson     -->
+      <dependency>
+        <groupId>com.alibaba.fastjson2</groupId>
+        <artifactId>fastjson2</artifactId>
+        <version>${fastjson2.version}</version>
+      </dependency>
+      <!--   子模块 -->
+      <dependency>
+        <groupId>org.microservices</groupId>
+        <artifactId>api</artifactId>
+        <version>${revision}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.microservices</groupId>
+        <artifactId>accomplish</artifactId>
+        <version>${revision}</version>
+      </dependency>
+      <!--   hutool     -->
+      <dependency>
+        <groupId>cn.hutool</groupId>
+        <artifactId>hutool-all</artifactId>
+        <version>${cn.hutool.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+     <plugins>
+       <plugin>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-maven-plugin</artifactId>
+         <configuration>
+           <!--    自己打出的包也能用 ,就是打出的包不包含BOOT-INF目录        -->
+           <skip>true</skip>
+           <excludes>
+             <exclude>
+               <groupId>org.projectlombok</groupId>
+               <artifactId>lombok</artifactId>
+             </exclude>
+           </excludes>
+         </configuration>
+         <executions>
+           <execution>
+             <goals>
+                <!--   打包为可执行的jar包-->
+               <goal>repackage</goal>
+             </goals>
+           </execution>
+         </executions>
+       </plugin>
+        <!--   maven工程版本依赖管理 用于替换占位符   -->
+       <plugin>
+         <groupId>org.codehaus.mojo</groupId>
+         <artifactId>flatten-maven-plugin</artifactId>
+         <version>${flatten-maven-plugin.version}</version>
+         <configuration>
+           <!--true：更新pom文件，不然无法更新module里的pom版本号，此处还有更高级的用法，具体参靠官方文档-->
+           <updatePomFile>true</updatePomFile>
+           <flattenMode>resolveCiFriendliesOnly</flattenMode>
+         </configuration>
+         <executions>
+           <execution>
+             <id>flatten</id>
+             <phase>process-resources</phase>
+             <goals>
+               <goal>flatten</goal>
+             </goals>
+           </execution>
+           <execution>
+             <id>flatten.clean</id>
+             <phase>clean</phase>
+             <goals>
+               <goal>clean</goal>
+             </goals>
+           </execution>
+         </executions>
+       </plugin>
+     </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${spring.boot.version}</version>
+          <configuration>
+          <!--    自己打出的包也能用 ,就是打出的包不包含BOOT-INF目录        -->
+            <skip>true</skip>
+            <excludes>
+              <exclude>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+              </exclude>
+            </excludes>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
