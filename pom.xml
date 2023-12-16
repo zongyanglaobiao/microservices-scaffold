@@ -2,8 +2,8 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.microservices</groupId>
-  <artifactId>microservices-template</artifactId>
+  <groupId>org.xxl</groupId>
+  <artifactId>microservices-scaffold-spring-boot-starter</artifactId>
   <version>${revision}</version>
   <packaging>pom</packaging>
 
@@ -16,16 +16,17 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
-    <!-- 版本管理   -->
+    <!-- spring 版本管理   -->
     <spring.boot.version>3.0.2</spring.boot.version>
+    <spring-cloud-alibaba-dependencies.version>2022.0.0.0</spring-cloud-alibaba-dependencies.version>
+    <spring-cloud-dependencies.version>2022.0.0</spring-cloud-dependencies.version>
+    <!--  版本管理   -->
     <com.github.xiaoymin.version>4.2.0</com.github.xiaoymin.version>
     <com.baomidou.version>3.5.3.1</com.baomidou.version>
     <pagehelper-spring-boot-starter.version>1.4.6</pagehelper-spring-boot-starter.version>
     <cn.hutool.version>5.8.20</cn.hutool.version>
     <snakeyaml.version>2.2</snakeyaml.version>
     <com.baomidou.version>3.5.3.1</com.baomidou.version>
-    <spring-cloud-alibaba-dependencies.version>2022.0.0.0</spring-cloud-alibaba-dependencies.version>
-    <spring-cloud-dependencies.version>2022.0.0</spring-cloud-dependencies.version>
     <fastjson2.version>2.0.23</fastjson2.version>
     <!-- 插件版本   -->
     <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
@@ -63,34 +64,11 @@
         <artifactId>mybatis-plus-boot-starter</artifactId>
         <version>${com.baomidou.version}</version>
       </dependency>
-      <!--   分页      -->
-      <dependency>
-        <groupId>com.github.pagehelper</groupId>
-        <artifactId>pagehelper-spring-boot-starter</artifactId>
-        <version>${pagehelper-spring-boot-starter.version}</version>
-      </dependency>
-      <!--	knife4j文档	-->
-      <dependency>
-        <groupId>com.github.xiaoymin</groupId>
-        <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
-        <version>${com.github.xiaoymin.version}</version>
-      </dependency>
       <!--   fastjson     -->
       <dependency>
         <groupId>com.alibaba.fastjson2</groupId>
         <artifactId>fastjson2</artifactId>
         <version>${fastjson2.version}</version>
-      </dependency>
-      <!--   子模块 -->
-      <dependency>
-        <groupId>org.microservices</groupId>
-        <artifactId>api</artifactId>
-        <version>${revision}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.microservices</groupId>
-        <artifactId>accomplish</artifactId>
-        <version>${revision}</version>
       </dependency>
       <!--   hutool     -->
       <dependency>
